@@ -1,0 +1,2 @@
+docker build -t devops-landing-page .
+docker run -d -p 8082:80 --name devops-landing-page-container devops-landing-page
