@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  landing-page:
+    image:  # You could pin the version (e.g., Landing-page:9.9)
+    volumes:
+      - landing-page-data:/mnt/data/landing-page-data
+    ports:
+      - "8082:8082"
+    restart: unless-stopped  # Ensures Landing-Page container restarts on failure
