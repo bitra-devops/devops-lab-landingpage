@@ -8,3 +8,6 @@ services:
     ports:
       - "8082:8082"
     restart: unless-stopped  # Ensures Landing-Page container restarts on failure
+
+volumes:
+  landing-page-data: 
