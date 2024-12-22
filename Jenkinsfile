@@ -8,6 +8,8 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+        //NEXUS_URL = 'http://100.119.108.38:8081/repository/docker-releases/'
+        
     }
 
     stages {
@@ -17,26 +19,101 @@ pipeline {
             }
         }
 
-        stage('Docker Compose') {
+        stage('SonarQube Analysis') {
             steps {
-                sh 'mvn compile'
+                withSonarQubeEnv('sonar') { // Ensure SonarQube is configured in Jenkins
+                    sh "${SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=devops-landingpage \
+                        -Dsonar.projectName=devops-landingpage \
+                        -Dsonar.sources=. \
+                        -Dsonar.java.binaries=."
+                }
             }
         }
 
-        stage('Unit Test') {
+        stage('Dockerhub Login') {
             steps {
-                sh 'mvn test -DskipTests=true'
-            }
-        }                
-                
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=Ekart -Dsonar.projectName=Ekart \
-                    -Dsonar.java.binaries=. '''
-
+                script {
+                    withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                        echo "Docker login successful using Jenkins credentials."
+                    }
                 }
             }
-        }            
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
+                    def latestTag = "santoshbitradocker/devops-landing-page:latest"
+
+                    sh "docker build -t ${incrementalTag} -t ${latestTag} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                script {
+                    def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
+                    def latestTag = "santoshbitradocker/devops-landing-page:latest"
+
+                    withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                        sh "docker push ${incrementalTag}"
+                        sh "docker push ${latestTag}"
+                    }
+                }
+            }
+        }
+
+        stage('Stop Existing Container') {
+            steps {
+                script {
+                    // Stop the container if it exists
+                    sh """
+                    CONTAINER_ID=\$(docker ps -q -f name=landing-page)
+                    if [ -n "\$CONTAINER_ID" ]; then
+                        echo "Stopping existing container..."
+                        docker stop \$CONTAINER_ID
+                        docker rm \$CONTAINER_ID
+                    else
+                        echo "No existing container to stop."
+                    fi
+                    """
+                }
+            }
+        }
+
+
+        stage('Docker Compose') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    def url = "http://100.119.108.38:8082"
+            
+                    try {
+                        // Using the httpRequest step
+                        def response = httpRequest(
+                        url: url,
+                        httpMode: 'GET',
+                        acceptType: 'APPLICATION_JSON',
+                        timeout: 30000
+                        )
+                
+                        // Check the response code and proceed accordingly
+                echo "Successfully connected to ${url} with response: ${response}"
+            } catch (Exception e) {
+                error("Failed to connect to ${url}: ${e.message}")
+                }
+                }
+            }            
+        }
     }
 }
