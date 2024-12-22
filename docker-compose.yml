@@ -6,7 +6,7 @@ services:
     volumes:
       - landing-page-data:/mnt/data/landing-page-data/data
     ports:
-      - "80:8082"
+      - "8082:80"
     restart: unless-stopped  # Ensures Landing-Page container restarts on failure
 
 volumes:
