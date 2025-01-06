@@ -13,6 +13,12 @@ pipeline {
     }
 
     stages {
+
+        stage('Cleanup Workspace') {
+            steps {
+                deleteDir()
+            }
+            
         stage('Git Checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-bitra-devops', url: 'https://github.com/bitra-devops/devops-lab-landingpage.git']])
