@@ -81,7 +81,7 @@
         <div class="access-link-wrapper">
           <a href="http://100.119.108.38:9000/projects/create" target="_blank" class="access-link">
             <div class="access-icon">
-              <img src="./images/sonarqube-logo.png" alt="SonarQube Logo" width="56" height="56" />
+              <img src="https://bansircloud.com/wp-content/uploads/2021/02/SONARqUBE.png" alt="SonarQube Logo" width="56" height="56" />
             </div>
             <span class="access-text">SonarQube</span>
           </a>
@@ -106,16 +106,14 @@
           <span class="access-text">Docs</span>
         </div>
         <div class="access-link-wrapper">
-          <a href="http://100.119.108.38:8085" target="_blank" class="access-link">
-            <div class="access-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                <polyline points="2 17 12 22 22 17"/>
-                <polyline points="2 12 12 17 22 12"/>
-              </svg>
-            </div>
-            <span class="access-text">Apps</span>
-          </a>
+          <div class="access-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <span class="access-text">Apps</span>
         </div>
         <div class="access-link-wrapper">
           <div class="access-icon">
@@ -317,4 +315,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
