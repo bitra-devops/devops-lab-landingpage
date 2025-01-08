@@ -18,6 +18,7 @@ pipeline {
             steps {
                 deleteDir()
             }
+        }
             
         stage('Git Checkout') {
             steps {
