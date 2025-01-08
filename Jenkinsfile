@@ -4,10 +4,12 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven3'
+        git 'default'
     }
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+        PATH = "/usr/bin:$PATH"
         //NEXUS_URL = 'http://100.119.108.38:8081/repository/docker-releases/'
         
     }
