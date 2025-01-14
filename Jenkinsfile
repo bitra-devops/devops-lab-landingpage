@@ -30,7 +30,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar') { // Ensure SonarQube is configured in Jenkins
+                withSonarQubeEnv('sonar-scanner') { // Ensure SonarQube is configured in Jenkins
                     sh "${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=devops-landingpage \
                         -Dsonar.projectName=devops-landingpage \
