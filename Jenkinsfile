@@ -78,18 +78,10 @@ pipeline {
         stage('Push Docker Image to Nexus') {
             steps {
                 script {
-                    def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
-                    def latestTag = "santoshbitradocker/devops-landing-page:latest"
-                    def nexusTag = "100.119.108.38:8081/repository/landing-page/devops-landing-page:${env.BUILD_NUMBER}"
-
-            // Push Docker image to Nexus
-                    withDockerRegistry(credentialsId: 'Nexus', url: 'http://100.119.108.38:8081/repository/landing-page/') {
-                        sh "docker tag ${incrementalTag} ${nexusTag}"
-                        sh "docker push ${nexusTag}"
+                   nexusArtifactUploader credentialsId: 'Nexus', groupId: 'com.bitralabs', nexusUrl: '100.119.108.38:8081', nexusVersion: 'nexus2', protocol: 'http', repository: 'http://100.119.108.38:8081/repository/landing-page/', version: '${BUILD_NUMBER}'"
                     }
                 }
             }
-        }
 
 
 
