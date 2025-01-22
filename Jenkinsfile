@@ -78,7 +78,7 @@ pipeline {
         stage('Push Docker Image to Nexus') {
             steps {
                 script {
-                   nexusArtifactUploader credentialsId: 'Nexus', groupId: 'com.bitralabs', nexusUrl: '100.119.108.38:8081', nexusVersion: 'nexus2', protocol: 'http', repository: 'http://100.119.108.38:8081/repository/landing-page/', version: '${BUILD_NUMBER}'
+                   nexusArtifactUploader credentialsId: 'Nexus', groupId: 'com.bitralabs', nexusUrl: '100.119.108.38:8081', nexusVersion: 'nexus2', protocol: 'http', repository: 'landing-page', version: '${BUILD_NUMBER}'
                     }
                 }
             }
