@@ -75,19 +75,14 @@ pipeline {
             }
         }
 
+
         stage('Push Docker Image to Nexus') {
             steps {
                 script {
-                    def dockerRegistry = "100.119.108.38:8082"
+                    def dockerRegistry = "100.119.108.38:8081"
                     def imageName = "devops-landingpage"
-                    def incrementalTag = "${dockerRegistry}/${imageName}:${env.BUILD_NUMBER}"
-                    def latestTag = "${dockerRegistry}/${imageName}:latest"
-
-                    // Tag the image for Nexus
-                    sh """
-                        docker tag santoshbitradocker/${imageName}:${env.BUILD_NUMBER} ${incrementalTag}
-                        docker tag santoshbitradocker/${imageName}:latest ${latestTag}
-                    """
+                    def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
+                    def latestTag = "santoshbitradocker/devops-landing-page:latest"
 
                     // Login to Nexus Docker Repository
                     withDockerRegistry(credentialsId: 'Nexus', url: "http://${dockerRegistry}") {
