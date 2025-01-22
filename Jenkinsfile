@@ -89,10 +89,10 @@ pipeline {
                         // Push Docker images to Nexus
                         sh "docker push ${incrementalTag}"
                         sh "docker push ${latestTag}"
-                    }
                 }
             }
         }
+
 
 
 
