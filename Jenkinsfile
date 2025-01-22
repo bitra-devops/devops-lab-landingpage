@@ -83,12 +83,9 @@ pipeline {
                     def imageName = "devops-landingpage"
                     def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
                     def latestTag = "santoshbitradocker/devops-landing-page:latest"
-
-                    // Login to Nexus Docker Repository
-                    withCredentials([string(credentialsId: 'Nexus', variable: 'NEXUS_PASSWORD')]) {
                     
                         // Docker login to Nexus
-                        sh "docker login --username admin --password ${NEXUS_PASSWORD} --insecure-registry http://${dockerRegistry}"  
+                        sh "docker login --username admin --password PostDomulur@123 --insecure-registry http://${dockerRegistry}"  
                         // Push Docker images to Nexus
                         sh "docker push ${incrementalTag}"
                         sh "docker push ${latestTag}"
