@@ -76,26 +76,6 @@ pipeline {
         }
 
 
-        stage('Push Docker Image to Nexus') {
-            steps {
-                script {
-                    def dockerRegistry = "100.119.108.38:8081"
-                    def imageName = "devops-landingpage"
-                    def incrementalTag = "santoshbitradocker/devops-landing-page:${env.BUILD_NUMBER}"
-                    def latestTag = "santoshbitradocker/devops-landing-page:latest"
-                    
-                        // Docker login to Nexus
-                        sh "docker login --username admin --password PostDomulur@123 --insecure-registry http://${dockerRegistry}"  
-                        // Push Docker images to Nexus
-                        sh "docker push ${incrementalTag}"
-                        sh "docker push ${latestTag}"
-                }
-            }
-        }
-
-
-
-
         stage('Stop Existing Container') {
             steps {
                 script {
